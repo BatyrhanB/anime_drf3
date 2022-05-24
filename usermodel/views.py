@@ -1,16 +1,20 @@
-from rest_framework import response, status, generics
+from rest_framework import response, status, generics, views
 from rest_framework.permissions import IsAuthenticated
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.sites.shortcuts import get_current_site
 from rest_framework.response import Response
+from drf_yasg import openapi
+import jwt
 
 from .models import User
 from .serializers import (
     UserSerializer,
-    RegistrationSerializer
+    RegistrationSerializer,
+    EmailVerificationSerializer
     )
 from .utils import Util
+from config import settings
 
 
 class RegistrationAPIView(generics.GenericAPIView):
@@ -55,3 +59,25 @@ class ProfileAPIView(generics.GenericAPIView):
         request.user.delete()
         return response.Response(status.HTTP_200_OK)
 
+class VerifyEmail(views.APIView):
+    serializer_class = EmailVerificationSerializer
+
+    token_param_config = openapi.Parameter(
+        'token', in_=openapi.IN_QUERY, description='Description', type=openapi.TYPE_STRING)
+
+    @swagger_auto_schema(manual_parameters=[token_param_config])
+    def get(self, request):
+        token = request.GET.get('token')
+
+        try:
+            payload = jwt.decode(token, settings.SECRET_KEY, algorithms="HS256")
+            user = User.objects.get(id=payload['user_id'])
+            if not user.is_email_confirmed:
+                user.is_email_confirmed = True
+                user.is_active = True
+                user.save()
+            return Response({'email': 'Successfully activated'}, status=status.HTTP_200_OK)
+        except jwt.ExpiredSignatureError:
+            return Response({'error': 'Activation Expired'}, status=status.HTTP_400_BAD_REQUEST)
+        except jwt.exceptions.DecodeError:
+            return Response({'error': 'Invalid token'}, status=status.HTTP_400_BAD_REQUEST)

@@ -6,4 +6,5 @@ from rest_framework.routers import DefaultRouter
 urlpatterns = [
     path('register/', views.RegistrationAPIView.as_view()),
     path('profile/', views.ProfileAPIView.as_view()),
+    path('verify-email/', views.VerifyEmail.as_view()),
 ]
