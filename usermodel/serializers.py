@@ -1,4 +1,3 @@
-
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import serializers, status
 from rest_framework_simplejwt.views import (
@@ -17,6 +16,19 @@ class UserSerializer(serializers.ModelSerializer):
         fields = (
             'id', 'email', 'first_name', 'last_name','is_staff','is_active','is_email_confirmed','date_joined')
         read_only_fields = ('date_joined',)
+
+
+class PasswordField(serializers.CharField):
+    """
+        Just password create passowrd field
+    """
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault('style', {})
+
+        kwargs['style']['input_type'] = 'password'
+        kwargs['write_only'] = True
+
+        super().__init__(*args, **kwargs)
 
 
 

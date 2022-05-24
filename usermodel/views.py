@@ -1,24 +1,31 @@
 from rest_framework import response, status, generics
 from rest_framework.permissions import IsAuthenticated
 from drf_yasg.utils import swagger_auto_schema
+from rest_framework_simplejwt.tokens import RefreshToken
+from django.contrib.sites.shortcuts import get_current_site
+from rest_framework.response import Response
 
+from .models import User
 from .serializers import (
     UserSerializer,
+    RegistrationSerializer
     )
+from .utils import Util
+
+
 class RegistrationAPIView(generics.GenericAPIView):
-    """
-        APIViews for signUp
-    """
     serializer_class = RegistrationSerializer
 
     def post(self, request):
         serializers = self.serializer_class(data=request.data)
         serializers.is_valid(raise_exception=True)
         serializers.save()
+        current_site = get_current_site(
+        request=request).domain
         user_data = serializers.data
         user = User.objects.get(email=user_data['email'])
         token = RefreshToken.for_user(user).access_token
-        abs_url = f'{HOST_OF_SERVER}/api/v1/users/verify-email/'+ '?token=' + str(token)
+        abs_url = f'http:// + {current_site}/api/v1/users/verify-email/'+ '?token=' + str(token)
         email_body = f'Hello' \
                      f'Use this link to activate your email\n ' \
                      f'The link will be active for 10 minutes \n {abs_url}'
