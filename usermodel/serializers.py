@@ -19,6 +19,41 @@ class UserSerializer(serializers.ModelSerializer):
         read_only_fields = ('date_joined',)
 
 
+
+class RegistrationSerializer(serializers.ModelSerializer):
+
+    password = PasswordField(required=True, allow_blank=False, allow_null=False)
+    password2 = PasswordField(required=True, allow_blank=False, allow_null=False)
+
+    class Meta:
+        model = User
+        fields = [
+            'id', 'email', 'password', 'password2', 'first_name', 'last_name']
+
+        extra_kwargs = {
+            'password': {'write_only': True}
+        }
+
+    def create(self, validated_data):
+        account = User(
+            email=self.validated_data['email'],
+            first_name=self.validated_data['first_name'],
+            last_name=self.validated_data['last_name'],
+        )
+
+        password = self.validated_data['password']
+        password2 = self.validated_data['password2']
+
+        if password != password2:
+            raise serializers.ValidationError(
+                {'password': 'Password must much'}
+            )
+        account.set_password(password)
+        account.save()
+        return account
+
+
+
 class TokenObtainPairResponseSerializer(serializers.Serializer):
     access = serializers.CharField()
     refresh = serializers.CharField()

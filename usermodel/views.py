@@ -5,6 +5,28 @@ from drf_yasg.utils import swagger_auto_schema
 from .serializers import (
     UserSerializer,
     )
+class RegistrationAPIView(generics.GenericAPIView):
+    """
+        APIViews for signUp
+    """
+    serializer_class = RegistrationSerializer
+
+    def post(self, request):
+        serializers = self.serializer_class(data=request.data)
+        serializers.is_valid(raise_exception=True)
+        serializers.save()
+        user_data = serializers.data
+        user = User.objects.get(email=user_data['email'])
+        token = RefreshToken.for_user(user).access_token
+        abs_url = f'{HOST_OF_SERVER}/api/v1/users/verify-email/'+ '?token=' + str(token)
+        email_body = f'Hello' \
+                     f'Use this link to activate your email\n ' \
+                     f'The link will be active for 10 minutes \n {abs_url}'
+        data = {'email_body': email_body, 'to_email': user.email,
+            'email_subject': 'Verify your email'}
+        Util.send_email(data)
+        return Response(user_data, status=status.HTTP_201_CREATED)
+
 
 class ProfileAPIView(generics.GenericAPIView):
     serializer_class = UserSerializer
