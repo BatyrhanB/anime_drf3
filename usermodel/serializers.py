@@ -8,6 +8,16 @@ from rest_framework_simplejwt.views import (
     TokenVerifyView,
 )
 
+from .models import User
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = (
+            'id', 'email', 'first_name', 'last_name','is_staff','is_active','is_email_confirmed','date_joined')
+        read_only_fields = ('date_joined',)
+
 
 class TokenObtainPairResponseSerializer(serializers.Serializer):
     access = serializers.CharField()
