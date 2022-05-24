@@ -9,6 +9,7 @@ from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 
 from usermodel.managers import UserManager
+from rest_framework_simplejwt.tokens import RefreshToken
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -74,3 +75,11 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def email_user(self, subject, message, from_email=None, **kwargs):
         send_mail(subject, message, from_email, [self.email], **kwargs)
+
+    def get_tokens_for_user(user):
+        refresh = RefreshToken.for_user(user)
+
+        return {
+            'refresh': str(refresh),
+            'access': str(refresh.access_token),
+    }
