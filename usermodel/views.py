@@ -1,4 +1,4 @@
-from rest_framework import response, status, generics, views
+from rest_framework import response, status, generics, views, exceptions
 from rest_framework.permissions import IsAuthenticated
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -6,15 +6,30 @@ from django.contrib.sites.shortcuts import get_current_site
 from rest_framework.response import Response
 from drf_yasg import openapi
 import jwt
+from django.contrib.auth import login as log, authenticate 
+from .exceptions import UserNotVerified
 
 from .models import User
 from .serializers import (
     UserSerializer,
     RegistrationSerializer,
-    EmailVerificationSerializer
+    EmailVerificationSerializer,
+    LoginSerializer,
+    LoginResponseSerializer
     )
 from .utils import Util
 from config import settings
+
+
+def get_login_response(user, request):
+    refresh = RefreshToken.for_user(user)
+    data = {
+        "user": UserSerializer(instance=user, context={'request': request}).data,
+        "refresh": str(refresh),
+        "access": str(refresh.access_token)
+    }
+    return data
+
 
 
 class RegistrationAPIView(generics.GenericAPIView):
@@ -45,7 +60,7 @@ class ProfileAPIView(generics.GenericAPIView):
 
     @swagger_auto_schema(responses={'200': UserSerializer()}, tags=['auth'])
     def get(self, request):
-        user = request.user
+        user = request.userexceptions,
         serializer = self.get_serializer(instance=request.user)
         return response.Response(data=serializer.data)
 
@@ -81,3 +96,20 @@ class VerifyEmail(views.APIView):
             return Response({'error': 'Activation Expired'}, status=status.HTTP_400_BAD_REQUEST)
         except jwt.exceptions.DecodeError:
             return Response({'error': 'Invalid token'}, status=status.HTTP_400_BAD_REQUEST)
+
+class LoginAPIView(generics.GenericAPIView):
+    authentication_classes = ()
+    permission_classes = ()
+    serializer_class = LoginSerializer
+
+    @swagger_auto_schema(responses={'200': LoginResponseSerializer()}, tags=['auth'])
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data, context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        user = authenticate(email=serializer.validated_data['email'], password=serializer.validated_data['password'])
+        if not user:
+            raise exceptions.AuthenticationFailed()
+        log(request, user)
+        if request.user.is_email_confirmed == False:
+            raise UserNotVerified()
+        return response.Response(data=get_login_response(user, request))

@@ -62,3 +62,17 @@ class EmailVerificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['token']
+
+
+
+class LoginResponseSerializer(serializers.Serializer):
+    user = UserSerializer()
+    refresh = serializers.CharField()
+    access = serializers.CharField()
+
+
+class LoginSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True, allow_blank=False, allow_null=False)
+    password = PasswordField(required=True, allow_blank=False, allow_null=False)
+
+
