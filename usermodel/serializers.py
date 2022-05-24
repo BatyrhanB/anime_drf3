@@ -14,9 +14,6 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class PasswordField(serializers.CharField):
-    """
-        Just password create passowrd field
-    """
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('style', {})
 
