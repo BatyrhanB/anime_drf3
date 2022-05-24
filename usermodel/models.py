@@ -8,15 +8,10 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 
-# from usermodel.managers import UserManager
+from usermodel.managers import UserManager
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    """
-    An abstract base class implementing a fully featured User model with
-    admin-compliant permissions.
-    Username and password are required. Other fields are optional.
-    """
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = CIEmailField(
         _('Email Address'),
@@ -54,7 +49,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         default=timezone.now
     )
 
-    # objects = UserManager()
+    objects = UserManager()
 
     EMAIL_FIELD = 'email'
     USERNAME_FIELD = 'email'
@@ -72,15 +67,10 @@ class User(AbstractBaseUser, PermissionsMixin):
         self.email = self.__class__.objects.normalize_email(self.email)
 
     def get_full_name(self):
-        """
-        Return the first_name plus the last_name, with a space in between.
-        """
         return f"{self.first_name} {self.last_name}"
 
     def get_short_name(self):
-        """Return the short name for the user."""
         return self.first_name
 
     def email_user(self, subject, message, from_email=None, **kwargs):
-        """Send an email to this user."""
         send_mail(subject, message, from_email, [self.email], **kwargs)
