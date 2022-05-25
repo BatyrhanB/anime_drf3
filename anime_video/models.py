@@ -101,3 +101,11 @@ class HTML5Video(models.Model):
     class Meta:
         verbose_name = "Html 5 Video"
         verbose_name_plural = "Html 5 Videos"
+
+class EmbedVideo(Video):
+    video_url = models.URLField(null=True, blank=True)
+    video_code = models.TextField(
+        null=True,
+        blank=True,
+        help_text="Use the video embed code instead of the url if your frontend does not support embedding with the URL only."
+    )
