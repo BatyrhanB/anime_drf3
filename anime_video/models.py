@@ -46,7 +46,7 @@ class Video(models.Model):
     class Meta:
         verbose_name = "Video"
         verbose_name_plural = "Video"
-        ordering = ('-publish_date', '-created_date')
+        # ordering = ('-publish_date')
         get_latest_by = 'publish_date'
 
 
@@ -96,7 +96,7 @@ class HTML5Video(models.Model):
         help_text="The file you wish to upload. Make sure that it's the correct format.",
     )
 
-    basic_video = models.ForeignKey(BasicVideo)
+    basic_video = models.ForeignKey(BasicVideo, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = "Html 5 Video"

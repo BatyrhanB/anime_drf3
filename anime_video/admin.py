@@ -12,8 +12,8 @@ class VideoAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)} 
     date_hierarchy = 'publish_date'
     list_display = ['title', 'slug', 'publish_date', 'is_public',
-        'allow_comments', 'author']
-    list_filter = ['created_date', 'publish_date', 'modified_date',
+        'allow_comments']
+    list_filter = ['publish_date', 'modified_date',
         'is_public', 'allow_comments']
     search_fields = ['title', 'description', 'tags']
     fieldsets = (
