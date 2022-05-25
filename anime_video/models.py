@@ -69,3 +69,35 @@ class Video(models.Model):
         if self.publish_date == None and self.is_public:
             self.publish_date = datetime.now()
         super(Video, self).save(*args, **kwargs)
+
+class BasicVideo(Video):
+    pass
+
+
+class HTML5Video(models.Model):
+    OGG = 0
+    WEBM = 1
+    MP4 = 2
+    FLASH = 3
+    VIDEO_TYPE = (
+        (OGG, 'video/ogg'),
+        (WEBM, 'video/webm'),
+        (MP4, 'video/mp4'),
+        (FLASH, 'video/flv'),
+    )
+
+    video_type = models.IntegerField(
+        choices=VIDEO_TYPE,
+        default=WEBM,
+        help_text="The Video type"
+    )
+    video_file = models.FileField(
+        upload_to="videos/html5/",
+        help_text="The file you wish to upload. Make sure that it's the correct format.",
+    )
+
+    basic_video = models.ForeignKey(BasicVideo)
+
+    class Meta:
+        verbose_name = "Html 5 Video"
+        verbose_name_plural = "Html 5 Videos"
