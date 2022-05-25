@@ -1,4 +1,8 @@
 from django.contrib import admin
+from anime_video.models import *
+
+class HTML5VideoInline(admin.TabularInline):
+    model = HTML5Video
 
 class VideoCategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
@@ -18,3 +22,23 @@ class VideoAdmin(admin.ModelAdmin):
             'allow_comments', 'publish_date', 'author',
         ]}),
     )
+
+
+class FlashVideoAdmin(VideoAdmin):
+    list_display = VideoAdmin.list_display + ['encode']
+    list_filter = VideoAdmin.list_filter + ['encode']
+    fieldsets = VideoAdmin.fieldsets + (
+        ('Video Source', {'fields': [
+            'original_file',
+            'flv_file',
+            'thumbnail', 
+            'encode'
+        ]}),
+    )
+
+class BasicVideoAdmin(VideoAdmin):
+    inlines = [HTML5VideoInline]
+
+
+admin.site.register(VideoCategory, VideoCategoryAdmin)
+admin.site.register(FlashVideo, FlashVideoAdmin)
