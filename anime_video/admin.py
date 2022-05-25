@@ -1,3 +1,5 @@
 from django.contrib import admin
 
-# Register your models here.
+class VideoCategoryAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'slug': ('title',)}
+    list_display = ['title', 'slug']
