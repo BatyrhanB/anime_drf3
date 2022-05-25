@@ -36,9 +36,20 @@ class FlashVideoAdmin(VideoAdmin):
         ]}),
     )
 
+class EmbedVideoAdmin(VideoAdmin):
+    list_display = VideoAdmin.list_display + ['video_url']
+    fieldsets = VideoAdmin.fieldsets + (
+        ('Video Source', {'fields': [
+            'video_url',
+            'video_code',
+        ]}),
+    )
+
 class BasicVideoAdmin(VideoAdmin):
     inlines = [HTML5VideoInline]
 
 
 admin.site.register(VideoCategory, VideoCategoryAdmin)
 admin.site.register(FlashVideo, FlashVideoAdmin)
+admin.site.register(EmbedVideo, EmbedVideoAdmin)
+admin.site.register(BasicVideo, BasicVideoAdmin)
