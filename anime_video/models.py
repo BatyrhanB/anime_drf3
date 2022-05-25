@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import datetime
 from django.conf import settings
+from django.urls import reverse
 from django.core.validators import FileExtensionValidator
 
 
@@ -20,9 +21,8 @@ class VideoCategory(models.Model):
     def __unicode__(self):
         return "%s" % self.title
 
-    @models.permalink
     def get_absolute_url(self):
-        return ('videostream_category_detail', [self.slug])
+        return reverse('videostream_category_detail', [self.slug])
 
 
 
@@ -56,9 +56,8 @@ class Video(models.Model):
     def __unicode__(self):
         return "%s" % self.title
 
-    @models.permalink
     def get_absolute_url(self):
-        return ('videostream_video_detail', (), { 
+        return reverse('videostream_video_detail', (), { 
             'year': self.publish_date.strftime("%Y"),
             'month': self.publish_date.strftime("%b"),
             'day': self.publish_date.strftime("%d"), 
