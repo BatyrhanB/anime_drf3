@@ -1,0 +1,53 @@
+
+{% extends 'base.html' %}
+{% comment %} {% block title %} {% endblock title %}
+{% block header %}{% endblock header %} {% endcomment %}
+{% block video %}
+    <div class="left-ads-display col-lg-9">
+        <div class="row">
+            {% for video in video_list %}
+                    <div class="col-md-4 product-men">
+                    <div class="product-shoe-info editContent text-center mt-lg-4">
+                        <div class="men-thumb-item">
+                            <img src="{{ movie.poster.url }}" class="img-fluid" alt="">
+                        </div>
+                        <div class="item-info-product">
+                            <h4 class="">
+                                <a href="{{ video.get_absolute_url }}"
+                                   class="editContent">
+                                    {{ video.title }}
+                                </a>
+                            </h4>
+
+                            {% comment %} <div class="product_price">
+                                <div class="grid-price">
+                                    <span class="money editContent">{{ video.tagline }}</span>
+                                </div> {% endcomment %}
+                            </div>
+                            <ul class="stars">
+                                <li><a href="#"><span class="fa fa-star"
+                                                      aria-hidden="true"></span></a>
+                                </li>
+                                <li><a href="#"><span class="fa fa-star"
+                                                      aria-hidden="true"></span></a>
+                                </li>
+                                <li><a href="#"><span class="fa fa-star-half-o"
+                                                      aria-hidden="true"></span></a>
+                                </li>
+                                <li><a href="#"><span class="fa fa-star-half-o"
+                                                      aria-hidden="true"></span></a>
+                                </li>
+                                <li><a href="#"><span class="fa fa-star-o"
+                                                      aria-hidden="true"></span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="grid-img-right mt-4 text-right bg bg1" >
+            {% comment %} {% include 'include/pagination.html' %} {% endcomment %}
+        </div>
+    </div>
+{% endblock video %}

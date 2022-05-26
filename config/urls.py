@@ -23,6 +23,7 @@ from .yasg import urlpatterns as swagger_urlpatterns
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/users/', include('usermodel.urls')),
+    path('api/v1/video', include('anime_video.urls'))
 ] + swagger_urlpatterns
 
 if settings.DEBUG:
