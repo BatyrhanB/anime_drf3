@@ -18,8 +18,8 @@ class VideoAdmin(admin.ModelAdmin):
     search_fields = ['title', 'description', 'tags']
     fieldsets = (
         ('Video Details', {'fields': [
-            'title', 'slug', 'description', 'tags', 'categories', 'is_public',
-            'allow_comments', 'publish_date', 'author',
+            'title', 'slug', 'description', 'is_public',
+            'allow_comments', 'publish_date'    
         ]}),
     )
 
