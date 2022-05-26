@@ -83,6 +83,20 @@ class Video(models.Model):
             self.publish_date = datetime.now()
         super(Video, self).save(*args, **kwargs)
 
+
+class VideoShots(models.Model):
+    title = models.CharField("Заголовок", max_length=100)
+    description = models.TextField("Описание")
+    image = models.ImageField("Изображение", upload_to="video_shots/")
+    video = models.ForeignKey(Video, verbose_name="Видео", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = "Кадр из видео"
+        verbose_name_plural = "Кадры из видео"
+
 class BasicVideo(Video):
     pass
 
