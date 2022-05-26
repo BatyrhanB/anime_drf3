@@ -15,8 +15,8 @@ class VideoCategory(models.Model):
 
 
     class Meta:
-        verbose_name = "Video Categories"
-        verbose_name_plural = "Video Categories"
+        verbose_name = "Категория"
+        verbose_name_plural = "Категории"
 
     def __unicode__(self):
         return "%s" % self.title
