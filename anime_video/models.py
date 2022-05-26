@@ -24,7 +24,20 @@ class VideoCategory(models.Model):
     def get_absolute_url(self):
         return reverse('videostream_category_detail', [self.slug])
 
+class Personage(models.Model):
+    name = models.CharField("Имя", max_length=100)
+    description = models.TextField("Описание")
+    image = models.ImageField("Изображение", upload_to="actors/")
 
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('actor_detail', kwargs={"slug": self.name})
+
+    class Meta:
+        verbose_name = "Персонаж"
+        verbose_name_plural = "Персонажи"
 
 
 class Video(models.Model):
