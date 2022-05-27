@@ -1,14 +1,15 @@
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
-from rest_framework.views import APIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView
 
 from .models import Video
 from . serializers import VideoSerializer
-class VideoList(APIView):
-    renderer_classes = [TemplateHTMLRenderer]
-    template_name = 'video_list.html'
+class VideoList(ListAPIView):
+    queryset = Video.objects.all()
+    serializer_class = VideoSerializer
 
-    def get(self, video):
-        video = Video.objects.all()
-        serializer = VideoSerializer(video, many=True)
-        return Response({'serializer': serializer, 'video': video})
+
+class VideoDetail(RetrieveAPIView):
+    queryset = Video.objects.all()
+    serializer_class = VideoSerializer
+

@@ -5,4 +5,4 @@ from .models import Video
 class VideoSerializer(s.ModelSerializer):
     class Meta:
         model = Video                           
-        fields = ('title', 'descritpion', 'image', 'file')
+        fields = ('title', 'description', 'image', 'file')
