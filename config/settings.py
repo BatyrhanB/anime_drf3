@@ -44,6 +44,7 @@ THIRD_PARTY_APPS = [
     'drf_yasg2',
     'rest_framework',
     'rest_framework_simplejwt',
+    'debug_toolbar',
 ]
 
 PROJECT_APPS = [
@@ -79,6 +80,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 AUTHENTICATION_BACKENDS = [
