@@ -61,9 +61,9 @@ services:
     volumes:
       - ./project/:/usr/src/app/
     environment:
-      - DEBUG=1
+      - DEBUG=True
       - SECRET_KEY=dbaa1_i7%*3r9-=z-+_mz4r-!qeed@(-a_r(g@k8jo8y3r27%m
-      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+      - DJANGO_ALLOWED_HOSTS=localhost 0.0.0.0 127.0.0.1 [::1]
     depends_on:
       - db
       - redis
