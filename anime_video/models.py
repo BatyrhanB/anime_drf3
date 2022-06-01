@@ -39,6 +39,7 @@ class Genre(models.Model):
 
     # def get_absolute_url(self):
     #     return reverse('video_category_detail', [self.slug])
+    
     class Meta:
         verbose_name = 'Жанр'
         verbose_name_plural = 'Жанры'

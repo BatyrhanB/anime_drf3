@@ -2,8 +2,8 @@ from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 
-from .models import Video, VideoCategory, Personage
-from . serializers import VideoListSerializer, VideoDetailSerializer, CategorySerializer, PersonageSerializer
+from .models import Video, VideoCategory, Personage, Genre
+from . serializers import VideoListSerializer, VideoDetailSerializer, CategorySerializer, PersonageSerializer, GenreSerializer
 
 
 class VideoList(ListAPIView):
@@ -32,3 +32,10 @@ class PersonageList(ListAPIView):
     queryset = Personage.objects.all()
     serializer_class = PersonageSerializer
 
+class GenreDetail(RetrieveAPIView):
+    queryset = Genre.objects.all()
+    serializer_class = GenreSerializer
+
+class GenreList(ListAPIView):
+    queryset = Genre.objects.all()
+    serializer_class = GenreSerializer

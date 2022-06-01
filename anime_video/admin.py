@@ -49,6 +49,11 @@ class PersonageAdmin(admin.ModelAdmin):
     list_display = ['name', 'description']
     search_fields = ['name', 'description']
 
+class GenreAdmin(admin.ModelAdmin):
+    list_display = ['title', 'description']
+    prepopulated_fields = {'slug': ('title',)} 
+    search_fields = ['title', 'description']
+
 class BasicVideoAdmin(VideoAdmin):
     inlines = [HTML5VideoInline]
 
@@ -58,3 +63,4 @@ admin.site.register(FlashVideo, FlashVideoAdmin)
 admin.site.register(EmbedVideo, EmbedVideoAdmin)
 admin.site.register(BasicVideo, BasicVideoAdmin)
 admin.site.register(Personage, PersonageAdmin)
+admin.site.register(Genre, GenreAdmin)

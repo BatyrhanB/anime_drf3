@@ -1,6 +1,6 @@
 from rest_framework import serializers as s
 
-from .models import Video, VideoCategory, Personage
+from .models import Video, VideoCategory, Personage, Genre
 
 class VideoListSerializer(s.ModelSerializer):
     class Meta:
@@ -20,4 +20,10 @@ class CategorySerializer(s.ModelSerializer):
 class PersonageSerializer(s.ModelSerializer):
     class Meta:
         model = Personage                           
+        fields = '__all__'
+
+
+class GenreSerializer(s.ModelSerializer):
+    class Meta:
+        model = Genre                           
         fields = '__all__'
