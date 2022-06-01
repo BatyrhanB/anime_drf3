@@ -4,6 +4,14 @@ from anime_video.models import *
 class VideoCategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     list_display = ['title', 'slug']
+class PersonageAdmin(admin.ModelAdmin):
+    list_display = ['name', 'description']
+    search_fields = ['name', 'description']
+
+class GenreAdmin(admin.ModelAdmin):
+    list_display = ['title', 'description']
+    prepopulated_fields = {'slug': ('title',)} 
+    search_fields = ['title', 'description']
 
 class VideoAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)} 
@@ -15,23 +23,13 @@ class VideoAdmin(admin.ModelAdmin):
     search_fields = ['title', 'description', 'tags']
     fieldsets = (
         ('Video Details', {'fields': [
-            'title', 'slug', 'description', 'is_public',
+            'title', 'slug', 'category', 'genres', 'description', 'is_public',
             'allow_comments', 'publish_date'    
         ]}),
     )
 
 
-class PersonageAdmin(admin.ModelAdmin):
-    list_display = ['name', 'description']
-    search_fields = ['name', 'description']
-
-class GenreAdmin(admin.ModelAdmin):
-    list_display = ['title', 'description']
-    prepopulated_fields = {'slug': ('title',)} 
-    search_fields = ['title', 'description']
-
-
+admin.site.register(Video, VideoAdmin)
 admin.site.register(VideoCategory, VideoCategoryAdmin)
 admin.site.register(Personage, PersonageAdmin)
 admin.site.register(Genre, GenreAdmin)
-admin.site.register(Video, VideoAdmin)
