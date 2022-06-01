@@ -26,10 +26,16 @@ class VideoAdmin(admin.ModelAdmin):
             'title', 'slug', 'category', 'genres', 'description', 'is_public',
             'allow_comments', 'publish_date'    
         ]}),
-    )
+    )   
+
+class ShotsAdmin(admin.ModelAdmin):
+    list_display = ['title', 'description']
+    prepopulated_fields = {'slug': ('title',)} 
+    search_fields = ['title', 'description']
 
 
 admin.site.register(Video, VideoAdmin)
 admin.site.register(VideoCategory, VideoCategoryAdmin)
 admin.site.register(Personage, PersonageAdmin)
 admin.site.register(Genre, GenreAdmin)
+admin.site.register(VideoShots, ShotsAdmin)
