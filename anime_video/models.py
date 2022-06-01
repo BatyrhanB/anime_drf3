@@ -64,6 +64,16 @@ class Personage(models.Model):
 
 
 class Video(models.Model):
+    OGG = 0
+    WEBM = 1
+    MP4 = 2
+    FLASH = 3
+    VIDEO_TYPE = (
+        (OGG, 'video/ogg'),
+        (WEBM, 'video/webm'),
+        (MP4, 'video/mp4'),
+        (FLASH, 'video/flv'),
+    )
     title = models.CharField(max_length=200, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     slug = models.SlugField(unique=True,
@@ -72,6 +82,15 @@ class Video(models.Model):
     file = models.FileField(
         upload_to='video/',
         validators=[FileExtensionValidator(allowed_extensions=['mp4'])]
+    )
+    video_type = models.IntegerField(
+        choices=VIDEO_TYPE,
+        default=WEBM,
+        help_text='Тип видео'
+    )
+    genres = models.ManyToManyField(Genre, verbose_name='Жанры')
+    category = models.ForeignKey(
+        VideoCategory, verbose_name='Категория', on_delete=models.SET_NULL, null=True
     )
     allow_comments = models.BooleanField(default=False)
     is_public = models.BooleanField(default=False)    
@@ -119,86 +138,3 @@ class VideoShots(models.Model):
     class Meta:
         verbose_name = 'Кадр из видео'
         verbose_name_plural = 'Кадры из видео'
-
-class BasicVideo(Video):
-    pass
-
-    class Meta:
-        verbose_name = 'Видео'
-        verbose_name_plural = 'Видео'   
-
-
-class HTML5Video(models.Model):
-    OGG = 0
-    WEBM = 1
-    MP4 = 2
-    FLASH = 3
-    VIDEO_TYPE = (
-        (OGG, 'video/ogg'),
-        (WEBM, 'video/webm'),
-        (MP4, 'video/mp4'),
-        (FLASH, 'video/flv'),
-    )
-
-    video_type = models.IntegerField(
-        choices=VIDEO_TYPE,
-        default=WEBM,
-        help_text='Тип видео'
-    )
-    video_file = models.FileField(
-        upload_to='videos/html5/',
-        help_text='Файл, который вы хотите загрузить. Убедитесь, что это правильный формат.',
-    )
-
-    basic_video = models.ForeignKey(BasicVideo, on_delete=models.CASCADE)
-
-    class Meta:
-        verbose_name = 'Html 5 видео'
-        verbose_name_plural = 'Html 5 видео'
-
-class EmbedVideo(Video):
-    video_url = models.URLField(null=True, blank=True)
-    video_code = models.TextField(
-        null=True,
-        blank=True,
-        help_text='Используйте код для встраивания видео вместо URL-адреса, если ваш интерфейс не поддерживает встраивание только с помощью URL-адреса.'
-    )
-    class Meta:
-        verbose_name = 'Встроенное видео'
-        verbose_name_plural = 'Встроенное видео'
-
-
-class FlashVideo(Video):
-    original_file = models.FileField(
-        upload_to="videos/flash/source/",
-        null=True,
-        blank=True,
-        help_text='Убедитесь, что видео, которое вы загружаете, имеет битрейт аудио не менее 16. Кодирование не будет работать при более низком битрейте звука.'
-    )
-
-    flv_file = models.FileField(
-        upload_to='videos/flash/flv/',
-        null=True,
-        blank=True,
-        help_text='Если у вас уже есть закодированное флэш-видео, загрузите его здесь (кодирование не требуется).'
-    )
-
-    thumbnail = models.ImageField(
-        blank=True,
-        null=True, 
-        upload_to='videos/flash/thumbnails/',
-        help_text='Если вы загрузили клип flv, который уже был закодирован, вам также нужно будет загрузить миниатюру. Если вы планируете использовать django-video для кодирования, вам не нужно загружать миниатюру, так как django-video создаст ее для вас'
-    )
-
-    encode = models.BooleanField(
-        default=False,
-        help_text='Закодируйте или перекодируйте клип. Если вы только хотели изменить некоторую информацию об элементе и не хотите повторно кодировать клип, убедитесь, что этот параметр не выбран.'
-    )
-
-    class Meta:
-        verbose_name = "Флэш-Видео"
-        verbose_name_plural = "Флэш-Видео"
-
-    def get_player_size(self):
-        size = getattr(settings, 'VIDEOSTREAM_SIZE', '320x240').split('x')
-        return "width: %spx; height: %spx;" % (size[0], size[1])
