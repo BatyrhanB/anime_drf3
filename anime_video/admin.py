@@ -45,6 +45,10 @@ class EmbedVideoAdmin(VideoAdmin):
         ]}),
     )
 
+class PersonageAdmin(admin.ModelAdmin):
+    list_display = ['name', 'description']
+    search_fields = ['name', 'description']
+
 class BasicVideoAdmin(VideoAdmin):
     inlines = [HTML5VideoInline]
 
@@ -53,3 +57,4 @@ admin.site.register(VideoCategory, VideoCategoryAdmin)
 admin.site.register(FlashVideo, FlashVideoAdmin)
 admin.site.register(EmbedVideo, EmbedVideoAdmin)
 admin.site.register(BasicVideo, BasicVideoAdmin)
+admin.site.register(Personage, PersonageAdmin)
