@@ -22,7 +22,23 @@ class VideoCategory(models.Model):
         return "%s" % self.title
 
     def get_absolute_url(self):
-        return reverse('videostream_category_detail', [self.slug])
+        return reverse('video_category_detail', [self.slug])
+
+
+class Genre(models.Model):
+    title = models.CharField("Имя", max_length=100)
+    description = models.TextField("Описание")
+    slug = models.SlugField(unique=True,
+        help_text="Удобный URL-адрес для жанра.")
+
+    def __unicode__(self):
+        return "%s" % self.title
+
+    def get_absolute_url(self):
+        return reverse('video_category_detail', [self.slug])
+    class Meta:
+        verbose_name = "Жанр"
+        verbose_name_plural = "Жанры"
 
 class Personage(models.Model):
     name = models.CharField("Имя", max_length=100)
