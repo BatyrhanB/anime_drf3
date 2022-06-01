@@ -37,9 +37,9 @@ class Genre(models.Model):
     def __unicode__(self):
         return "%s" % self.title
 
-    # def get_absolute_url(self):
-    #     return reverse('video_category_detail', [self.slug])
-    
+    def get_absolute_url(self):
+        return reverse('genre-detail', [self.slug])
+
     class Meta:
         verbose_name = 'Жанр'
         verbose_name_plural = 'Жанры'
