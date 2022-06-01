@@ -100,6 +100,10 @@ class VideoShots(models.Model):
 class BasicVideo(Video):
     pass
 
+    class Meta:
+        verbose_name = "Видео"
+        verbose_name_plural = "Видео"   
+
 
 class HTML5Video(models.Model):
     OGG = 0
@@ -136,6 +140,10 @@ class EmbedVideo(Video):
         blank=True,
         help_text="Используйте код для встраивания видео вместо URL-адреса, если ваш интерфейс не поддерживает встраивание только с помощью URL-адреса."
     )
+    class Meta:
+        verbose_name = "Встроенное видео"
+        verbose_name_plural = "Встроенное видео"
+
 
 class FlashVideo(Video):
     original_file = models.FileField(
@@ -163,6 +171,10 @@ class FlashVideo(Video):
         default=False,
         help_text="Закодируйте или перекодируйте клип. Если вы только хотели изменить некоторую информацию об элементе и не хотите повторно кодировать клип, убедитесь, что этот параметр не выбран."
     )
+
+    class Meta:
+        verbose_name = "Флэш-Видео"
+        verbose_name_plural = "Флэш-Видео"
 
     def get_player_size(self):
         size = getattr(settings, 'VIDEOSTREAM_SIZE', '320x240').split('x')
