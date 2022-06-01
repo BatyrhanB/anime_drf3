@@ -7,10 +7,26 @@ class VideoListSerializer(s.ModelSerializer):
         model = Video                           
         fields = ('title', 'description', 'image', 'file')
 
+class GenreSerializer(s.ModelSerializer):
+    class Meta:
+        model = Genre                           
+        fields = '__all__'
+
+class GenreInnerSerializer(s.ModelSerializer):
+    class Meta:
+        model = Genre                           
+        fields = ['id','title']
+
 class VideoDetailSerializer(s.ModelSerializer):
+
+    category = s.CharField(source='category.title')
+    # genre = s.CharField(source='genres.title')
+    genres = GenreInnerSerializer(many=True)
+
     class Meta:
         model = Video                           
-        fields = '__all__'
+        fields = ('title', 'description', 'slug', 'image', 'file', 'video_type', 'category', 'genres', 'allow_comments', 'is_public', 'create_at', 'modified_date', 'publish_date'
+                 )
 
 class CategorySerializer(s.ModelSerializer):
     class Meta:
@@ -23,7 +39,3 @@ class PersonageSerializer(s.ModelSerializer):
         fields = '__all__'
 
 
-class GenreSerializer(s.ModelSerializer):
-    class Meta:
-        model = Genre                           
-        fields = '__all__'
