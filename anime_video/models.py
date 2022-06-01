@@ -91,9 +91,9 @@ class Video(models.Model):
         default=WEBM,
         help_text='Тип видео'
     )
-    genres = models.ManyToManyField(Genre, verbose_name='Жанры')
+    genres = models.ManyToManyField(Genre, verbose_name='Жанры', related_name='videos')
     category = models.ForeignKey(
-        VideoCategory, verbose_name='Категория', on_delete=models.SET_NULL, null=True
+        VideoCategory, verbose_name='Категория', on_delete=models.SET_NULL, null=True, related_name='videos'
     )
     allow_comments = models.BooleanField(default=False)
     is_public = models.BooleanField(default=False)    

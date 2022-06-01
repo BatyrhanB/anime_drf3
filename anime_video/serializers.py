@@ -25,13 +25,22 @@ class VideoDetailSerializer(s.ModelSerializer):
 
     class Meta:
         model = Video                           
-        fields = ('title', 'description', 'slug', 'image', 'file', 'video_type', 'category', 'genres', 'allow_comments', 'is_public', 'create_at', 'modified_date', 'publish_date'
+        fields = ('title', 'description', 'slug', 'image', 
+                  'file', 'video_type', 'category', 'genres', 
+                  'allow_comments', 'is_public', 'create_at', 
+                  'modified_date', 'publish_date'
                  )
 
 class CategorySerializer(s.ModelSerializer):
     class Meta:
         model = VideoCategory                           
         fields = '__all__'
+
+class CategoryDetailSerializer(s.ModelSerializer):
+    videos = VideoListSerializer(many=True)
+    class Meta:
+        model = VideoCategory                           
+        fields = ['title', 'slug', 'description', 'videos']
 
 class PersonageSerializer(s.ModelSerializer):
     class Meta:

@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 
 from .models import Video, VideoCategory, Personage, Genre
-from . serializers import VideoListSerializer, VideoDetailSerializer, CategorySerializer, PersonageSerializer, GenreSerializer
+from . serializers import VideoListSerializer, VideoDetailSerializer, CategorySerializer, PersonageSerializer, GenreSerializer, CategoryDetailSerializer
 
 
 class VideoList(ListAPIView):
@@ -22,7 +22,7 @@ class CategoryList(ListAPIView):
 
 class CategoryDetail(RetrieveAPIView):
     queryset = VideoCategory.objects.all()
-    serializer_class = CategorySerializer
+    serializer_class = CategoryDetailSerializer
 
 class PersonageDetail(RetrieveAPIView):
     queryset = Personage.objects.all()
