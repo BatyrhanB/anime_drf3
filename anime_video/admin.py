@@ -23,7 +23,7 @@ class VideoAdmin(admin.ModelAdmin):
     search_fields = ['title', 'description', 'tags']
     fieldsets = (
         ('Video Details', {'fields': [
-            'title', 'slug', 'category', 'genres', 'personages', 'description', 'is_public',
+            'title', 'slug', 'file', 'video_type', 'category', 'genres', 'personages', 'description', 'is_public',
             'allow_comments', 'publish_date'    
         ]}),
     )   
@@ -35,7 +35,7 @@ class ShotsAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Video, VideoAdmin)
-admin.site.register(VideoCategory, VideoCategoryAdmin)
+admin.site.register(Anime, VideoCategoryAdmin)
 admin.site.register(Personage, PersonageAdmin)
 admin.site.register(Genre, GenreAdmin)
 admin.site.register(VideoShots, ShotsAdmin)

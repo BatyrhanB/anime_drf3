@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.core.validators import FileExtensionValidator
 
 
-class VideoCategory(models.Model):
+class Anime(models.Model):
     title = models.CharField(max_length=255)
     slug = models.SlugField(
         unique=True,
@@ -93,7 +93,7 @@ class Video(models.Model):
     )
     genres = models.ManyToManyField(Genre, verbose_name='Жанры')
     category = models.ForeignKey(
-        VideoCategory, verbose_name='Категория', on_delete=models.SET_NULL, null=True, related_name='videos'
+        Anime, verbose_name='Категория', on_delete=models.SET_NULL, null=True, related_name='videos'
     )
     personages = models.ManyToManyField(Personage, verbose_name='Персонажи')
     allow_comments = models.BooleanField(default=False)
