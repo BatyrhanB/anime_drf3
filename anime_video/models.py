@@ -15,8 +15,8 @@ class Anime(models.Model):
 
 
     class Meta:
-        verbose_name = 'Категория'
-        verbose_name_plural = 'Категории'
+        verbose_name = 'Аниме'
+        verbose_name_plural = 'Аниме'
 
     def __str__(self):
         return self.title
@@ -93,7 +93,7 @@ class Video(models.Model):
     )
     genres = models.ManyToManyField(Genre, verbose_name='Жанры')
     category = models.ForeignKey(
-        Anime, verbose_name='Категория', on_delete=models.SET_NULL, null=True, related_name='videos'
+        Anime, verbose_name='Аниме', on_delete=models.SET_NULL, null=True, related_name='videos'
     )
     personages = models.ManyToManyField(Personage, verbose_name='Персонажи')
     allow_comments = models.BooleanField(default=False)
