@@ -1,6 +1,7 @@
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.generics import ListAPIView, RetrieveAPIView
+from django_filters import rest_framework as filters
 
 from .models import Video, Anime, Personage, Genre
 from . serializers import VideoListSerializer, VideoDetailSerializer, PersonageSerializer, GenreSerializer, AnimeSerializer, AnimeDetailSerializer
@@ -9,6 +10,8 @@ from . serializers import VideoListSerializer, VideoDetailSerializer, PersonageS
 class VideoList(ListAPIView):
     queryset = Video.objects.all()
     serializer_class = VideoListSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_fields = ('category', 'genres', 'personages')
 
 
 class VideoDetail(RetrieveAPIView):

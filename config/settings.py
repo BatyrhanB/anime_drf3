@@ -48,6 +48,7 @@ THIRD_PARTY_APPS = [
     'rest_framework_simplejwt',
     'debug_toolbar',
     'django_celery_results',
+    'django_filters',
 ]
 
 PROJECT_APPS = [
