@@ -20,6 +20,7 @@ from django.conf.urls.static import static
 
 from .yasg import urlpatterns as swagger_urlpatterns
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include('anime_video.urls')),

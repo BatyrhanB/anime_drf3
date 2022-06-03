@@ -1,6 +1,5 @@
 from django.db import models
 from datetime import datetime
-from django.conf import settings
 from django.urls import reverse
 from django.core.validators import FileExtensionValidator
 
@@ -12,7 +11,6 @@ class Anime(models.Model):
         help_text='Удобный URL-адрес для категории',
     )
     description = models.TextField(null=True, blank=True)
-
 
     class Meta:
         verbose_name = 'Аниме'
@@ -47,6 +45,7 @@ class Genre(models.Model):
         verbose_name = 'Жанр'
         verbose_name_plural = 'Жанры'
 
+        
 class Personage(models.Model):
     name = models.CharField('Имя', max_length=100)
     description = models.TextField('Описание')

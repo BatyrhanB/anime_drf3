@@ -1,7 +1,6 @@
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import serializers, status
 
-
 from .models import User
 
 
@@ -21,7 +20,6 @@ class PasswordField(serializers.CharField):
         kwargs['write_only'] = True
 
         super().__init__(*args, **kwargs)
-
 
 
 class RegistrationSerializer(serializers.ModelSerializer):
@@ -56,13 +54,13 @@ class RegistrationSerializer(serializers.ModelSerializer):
         account.save()
         return account
 
+
 class EmailVerificationSerializer(serializers.ModelSerializer):
     token = serializers.CharField(max_length=555)
 
     class Meta:
         model = User
         fields = ['token']
-
 
 
 class LoginResponseSerializer(serializers.Serializer):

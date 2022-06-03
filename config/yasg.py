@@ -3,6 +3,7 @@ from drf_yasg2.views import get_schema_view
 from rest_framework import permissions
 from django.urls import path, include
 
+
 schema_view = get_schema_view(
     openapi.Info(
         title="Anime API",

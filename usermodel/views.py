@@ -31,7 +31,6 @@ def get_login_response(user, request):
     return data
 
 
-
 class RegistrationAPIView(generics.GenericAPIView):
     serializer_class = RegistrationSerializer
 
@@ -68,11 +67,12 @@ class ProfileAPIView(generics.GenericAPIView):
         serializer = self.get_serializer(request.user, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return response.Response(data=get_login_response(request.user, request.data))
+        return response.Response(data=serializer.data)
     
     def delete(self, request):
         request.user.delete()
         return response.Response(status.HTTP_200_OK)
+
 
 class VerifyEmail(views.APIView):
     serializer_class = EmailVerificationSerializer
@@ -96,6 +96,7 @@ class VerifyEmail(views.APIView):
             return Response({'error': 'Activation Expired'}, status=status.HTTP_400_BAD_REQUEST)
         except jwt.exceptions.DecodeError:
             return Response({'error': 'Invalid token'}, status=status.HTTP_400_BAD_REQUEST)
+
 
 class LoginAPIView(generics.GenericAPIView):
     authentication_classes = ()

@@ -1,17 +1,23 @@
 from django.contrib import admin
+
 from anime_video.models import *
+
 
 class VideoCategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     list_display = ['title', 'slug']
+
+
 class PersonageAdmin(admin.ModelAdmin):
     list_display = ['name', 'description']
     search_fields = ['name', 'description']
+
 
 class GenreAdmin(admin.ModelAdmin):
     list_display = ['title', 'description']
     prepopulated_fields = {'slug': ('title',)} 
     search_fields = ['title', 'description']
+
 
 class VideoAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)} 
@@ -27,6 +33,7 @@ class VideoAdmin(admin.ModelAdmin):
             'allow_comments', 'publish_date'    
         ]}),
     )   
+    
 
 class ShotsAdmin(admin.ModelAdmin):
     list_display = ['title', 'description']

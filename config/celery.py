@@ -3,8 +3,7 @@ from celery import Celery
 import logging
 from django.conf import settings
 
-# logger = logging.getLogger("Celery")
- 
+
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
  
 app = Celery('config')
