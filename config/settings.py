@@ -86,7 +86,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
-    # 'usermodel.middleware.get_user_data_middleware',
+    # 'usermodel.middleware.ScoreRequestsMiddlewere',
     ]
 
 
