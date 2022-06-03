@@ -6,7 +6,11 @@ from .models import Video, Anime, Personage, Genre
 class VideoListSerializer(s.ModelSerializer):
     class Meta:
         model = Video                           
-        fields = ('title', 'description', 'image', 'file')
+        fields = ('title',
+                  'description',
+                  'image', 
+                  'file'
+                  )
 
 
 class PersonageSerializer(s.ModelSerializer):
@@ -42,10 +46,20 @@ class VideoDetailSerializer(s.ModelSerializer):
 
     class Meta:
         model = Video                           
-        fields = ('title', 'description', 'slug', 'image', 
-                  'file', 'video_type', 'category', 'genres', 'personages',
-                  'allow_comments', 'is_public', 'create_at', 
-                  'modified_date', 'publish_date'
+        fields = ('title', 
+                  'description', 
+                  'slug', 
+                  'image', 
+                  'file', 
+                  'video_type', 
+                  'category', 
+                  'genres', 
+                  'personages',
+                  'allow_comments', 
+                  'is_public', 
+                  'create_at', 
+                  'modified_date', 
+                  'publish_date'
                  )
 
 
@@ -59,7 +73,10 @@ class AnimeDetailSerializer(s.ModelSerializer):
     videos = VideoListSerializer(many=True)
     class Meta:
         model = Anime                           
-        fields = ['title', 'slug', 'description', 'videos']
+        fields = ('title', 
+                  'slug', 
+                  'description', 
+                  'videos')
 
 
 

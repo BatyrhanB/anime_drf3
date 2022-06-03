@@ -11,7 +11,7 @@ from . serializers import (
     GenreSerializer, 
     AnimeSerializer, 
     AnimeDetailSerializer
-)
+    )
 
 
 class VideoList(ListAPIView):
