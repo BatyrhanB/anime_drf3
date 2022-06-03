@@ -233,7 +233,7 @@ CACHES = {
     }
 }
 
-INTERNAL_IPS = config('DEBUG_TOOL', default='localhost',)
+INTERNAL_IPS = config('DEBUG_HOST', default='localhost',)
 
 DEBUG_TOOLBAR_CONFIG = {
     "SHOW_TOOLBAR_CALLBACK": lambda request: True,
