@@ -96,10 +96,6 @@ TEMPLATES = [
 ]
 
 
-
-# Database
-# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': config('DB_ENGINE'),
@@ -113,6 +109,29 @@ DATABASES = {
 
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
+
+CELERY_BROKER_URL = config('BROKER_URL')
+CELERY_RESULT_BACKEND = config('RESULT_BACKEND')
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+
+CELERY_CACHE_BACKEND = 'default'
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION":  config('REDIS_HOST', default='redis://127.0.0.1:6379/1'),
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient"
+        }
+    }
+}
+
+CACHE_TTL = 60 * 15
+
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
 
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -130,9 +149,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/4.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
@@ -192,35 +208,13 @@ EMAIL_HOST_USER =config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
 
-CELERY_BROKER_URL = config('BROKER_URL')
-CELERY_RESULT_BACKEND = config('RESULT_BACKEND')
-CELERY_ACCEPT_CONTENT = ['application/json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
-
-CELERY_CACHE_BACKEND = 'default'
-
-CACHES = {
-    "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION":  config('REDIS_HOST', default='redis://127.0.0.1:6379/1'),
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient"
-        }
-    }
-}
-
-CACHE_TTL = 60 * 15
-
-SESSION_ENGINE = "django.contrib.sessions.backends.cache"
-SESSION_CACHE_ALIAS = "default"
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 DEBUG_TOOLBAR_CONFIG = {
     "SHOW_TOOLBAR_CALLBACK": lambda request: True,
 }
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGGING = {
     'version': 1,
