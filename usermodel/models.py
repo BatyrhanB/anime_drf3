@@ -49,6 +49,11 @@ class User(AbstractBaseUser, PermissionsMixin):
         _('Date Joined'),
         default=timezone.now
     )
+    last_active = models.DateTimeField(
+        'Дата последой активосьти', 
+        null=True, 
+        blank=True
+    )
 
     objects = UserManager()
 

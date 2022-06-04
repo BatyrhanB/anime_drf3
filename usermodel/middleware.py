@@ -1,3 +1,5 @@
+from .models import User
+from django.utils import timezone
 from django.utils.deprecation import MiddlewareMixin
 import time
 
@@ -33,7 +35,15 @@ class TimerMiddlewere(MiddlewareMixin):
         response = self.get_response(request, *args, **kwargs)
         end_time = time.monotonic()
         print(bcolors.OKGREEN + "Time view", end_time - start_time)
-        # print("\033[5;37;40m Time view\033[0;37;40m\n", end_time - start_time)
         return response
         
         
+def set_last_active_middleware(get_response):
+
+    def middleware(request):
+        response = get_response(request)
+        if request.user.is_authenticated:
+            User.objects.filter(id=request.user.id).update(last_active=timezone.now())
+        return response
+    return middleware
+
