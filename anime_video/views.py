@@ -14,8 +14,12 @@ from . serializers import (
     AnimeDetailSerializer
     )
 
+from config.mixins import RequestLogViewMixin
 
-class VideoList(ListAPIView):
+
+class VideoList(RequestLogViewMixin,
+                ListAPIView
+                ):
     queryset = Video.objects.all()
     serializer_class = VideoListSerializer
     filter_backends = (filters.DjangoFilterBackend,)
