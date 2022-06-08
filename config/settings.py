@@ -49,7 +49,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     # 'usermodel.middleware.ScoreRequestsMiddlewere',
-    'usermodel.middleware.TimerMiddlewere',
+    # 'usermodel.middleware.TimerMiddlewere',
     'usermodel.middleware.set_last_active_middleware',
     ]
 

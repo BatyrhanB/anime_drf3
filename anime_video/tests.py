@@ -84,6 +84,10 @@ class VideoTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(serializer_data, response.data)
 
+    def test_invalid_video_detail(self):
+        response = self.client.get(reverse('video-detail', kwargs={'pk': 30}))
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
 
     def test_video_shots(self):
         response = self.client.get(reverse('shots-list'))
