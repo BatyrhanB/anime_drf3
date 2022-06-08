@@ -1,7 +1,9 @@
+import time
 from .models import User
 from django.utils import timezone
 from django.utils.deprecation import MiddlewareMixin
-import time
+from django.core.cache import cache
+from django.views.decorators.cache import cache_page
 
 class bcolors:
     HEADER = '\033[95m'
@@ -40,7 +42,11 @@ class TimerMiddlewere(MiddlewareMixin):
         
 def set_last_active_middleware(get_response):
 
+    @cache_page(60*5)
     def middleware(request):
+        # cache_key = 'last_active'
+        # cache_time = 86400
+        # data = cache.get(cache_key)
         response = get_response(request)
         if request.user.is_authenticated:
             User.objects.filter(id=request.user.id).update(last_active=timezone.now())

@@ -43,7 +43,6 @@ prompt-toolkit==3.0.29
 psycopg2-binary==2.9.3
 pycparser==2.21
 PyJWT==2.4.0
-pymemcache==3.5.2
 pyparsing==3.0.9
 pyrsistent==0.18.1
 python-decouple==3.6
