@@ -2,7 +2,6 @@ from django.db import models
 from datetime import datetime
 from django.urls import reverse
 from django.core.validators import FileExtensionValidator
-from yaml import BaseLoader
 
 
 class Anime(models.Model):
@@ -48,9 +47,11 @@ class Genre(models.Model):
 
         
 class Personage(models.Model):
-    name = models.CharField('Имя', max_length=100)
+    name = models.CharField('Имя', 
+        max_length=100)
     description = models.TextField('Описание')
-    image = models.ImageField('Изображение', upload_to="actors/")
+    image = models.ImageField('Изображение',
+        upload_to="actors/")
     slug = models.SlugField(unique=True,
         help_text='Удобный URL-адрес.')
 
@@ -79,11 +80,13 @@ class Video(models.Model):
         (MP4, 'video/mp4'),
         (FLASH, 'video/flv'),
     )
-    title = models.CharField(max_length=200, null=True, blank=True)
+    title = models.CharField(max_length=200, 
+        null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     slug = models.SlugField(unique=True,
         help_text='Удобный URL-адрес для видеоклипа.')
-    image = models.ImageField(upload_to='image/', null=True, blank=True)
+    image = models.ImageField(upload_to='image/', 
+        null=True, blank=True)
     file = models.FileField(
         upload_to='video/',
         validators=[FileExtensionValidator(allowed_extensions=['mp4'])], null=True
@@ -95,10 +98,11 @@ class Video(models.Model):
         null=True
     )
     genres = models.ManyToManyField(Genre, verbose_name='Жанры', null=True)
-    category = models.ForeignKey(
-        Anime, verbose_name='Аниме', on_delete=models.SET_NULL, null=True, related_name='videos'
+    category = models.ForeignKey(Anime, 
+        verbose_name='Аниме', on_delete=models.SET_NULL, null=True, related_name='videos'
     )
-    personages = models.ManyToManyField(Personage, verbose_name='Персонажи')
+    personages = models.ManyToManyField(Personage, 
+        verbose_name='Персонажи')
     allow_comments = models.BooleanField(default=False)
     is_public = models.BooleanField(default=False)    
     create_at = models.DateTimeField(auto_now_add=True)
@@ -138,8 +142,13 @@ class VideoShots(models.Model):
     description = models.TextField('Описание', null=True, blank=True)
     slug = models.SlugField(unique=True,
         help_text='Удобный URL-адрес для видеокадров.')
-    image = models.ImageField('Изображение', upload_to='video_shots/', null=True, blank=True)
-    video = models.ForeignKey(Video, verbose_name='Видео', on_delete=models.CASCADE)
+    image = models.ImageField('Изображение', 
+        upload_to='video_shots/', 
+        null=True, blank=True)
+    video = models.ForeignKey(Video, 
+        verbose_name='Видео', 
+        on_delete=models.CASCADE
+    )
 
     def __str__(self):
         return self.title

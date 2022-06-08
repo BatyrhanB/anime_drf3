@@ -8,7 +8,14 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = (
-            'id', 'email', 'first_name', 'last_name','is_staff','is_active','is_email_confirmed','date_joined')
+                  'id', 
+                  'email', 
+                  'first_name', 
+                  'last_name',
+                  'is_staff',
+                  'is_active',
+                  'is_email_confirmed',
+                  'date_joined')
         read_only_fields = ('date_joined',)
 
 
@@ -29,8 +36,13 @@ class RegistrationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = [
-            'id', 'email', 'password', 'password2', 'first_name', 'last_name']
+        fields = (
+                  'id', 
+                  'email', 
+                  'password', 
+                  'password2', 
+                  'first_name', 
+                  'last_name')
 
         extra_kwargs = {
             'password': {'write_only': True}

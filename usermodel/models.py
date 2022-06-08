@@ -1,5 +1,4 @@
 import uuid
-
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.postgres.fields import CIEmailField
@@ -7,9 +6,9 @@ from django.core.mail import send_mail
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from usermodel.managers import UserManager
-from rest_framework_simplejwt.tokens import RefreshToken
 
 
 class User(AbstractBaseUser, PermissionsMixin):

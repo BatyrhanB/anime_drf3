@@ -1,6 +1,10 @@
 from rest_framework import serializers as s
 
-from .models import Video, Anime, Personage, Genre, VideoShots
+from .models import (Video, 
+                     Anime, 
+                     Personage, 
+                     Genre, 
+                     VideoShots)
 
 
 class VideoListSerializer(s.ModelSerializer):
@@ -22,7 +26,9 @@ class PersonageSerializer(s.ModelSerializer):
 class PersonageInnerSerializer(s.ModelSerializer):
     class Meta:
         model = Personage                           
-        fields = ['name', 'description']
+        fields = ('name', 
+                  'description'
+                 )
 
 
 class GenreSerializer(s.ModelSerializer):
@@ -34,7 +40,9 @@ class GenreSerializer(s.ModelSerializer):
 class GenreInnerSerializer(s.ModelSerializer):
     class Meta:
         model = Genre                           
-        fields = ['id','title']
+        fields = ('id',
+                  'title'
+                  )
 
 
 class VideoDetailSerializer(s.ModelSerializer):
@@ -77,7 +85,8 @@ class AnimeDetailSerializer(s.ModelSerializer):
         fields = ('title', 
                   'slug', 
                   'description', 
-                  'videos')
+                  'videos'
+                 )
 
 class VideoShotsListSerializer(s.ModelSerializer):
     class Meta:

@@ -1,24 +1,25 @@
+import jwt
+from django.contrib.sites.shortcuts import get_current_site
+from django.contrib.auth import login as log, authenticate 
 from rest_framework import response, status, generics, views, exceptions
 from rest_framework.permissions import IsAuthenticated
-from drf_yasg.utils import swagger_auto_schema
 from rest_framework_simplejwt.tokens import RefreshToken
-from django.contrib.sites.shortcuts import get_current_site
 from rest_framework.response import Response
+from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
-import jwt
-from django.contrib.auth import login as log, authenticate 
+
+from config import settings
 from .exceptions import UserNotVerified
+from .utils import Util
 
 from .models import User
 from .serializers import (
-    UserSerializer,
-    RegistrationSerializer,
-    EmailVerificationSerializer,
-    LoginSerializer,
-    LoginResponseSerializer
-    )
-from .utils import Util
-from config import settings
+                          UserSerializer,
+                          RegistrationSerializer,
+                          EmailVerificationSerializer,
+                          LoginSerializer,
+                          LoginResponseSerializer
+                         )
 
 
 def get_login_response(user, request):

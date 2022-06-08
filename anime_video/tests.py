@@ -11,7 +11,6 @@ from .models import (Anime,
                      Video,
                      VideoShots
                         )
-
 from .serializers import VideoDetailSerializer
 
 
