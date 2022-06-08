@@ -1,6 +1,6 @@
 from rest_framework import serializers as s
 
-from .models import Video, Anime, Personage, Genre
+from .models import Video, Anime, Personage, Genre, VideoShots
 
 
 class VideoListSerializer(s.ModelSerializer):
@@ -69,6 +69,7 @@ class AnimeSerializer(s.ModelSerializer):
         fields = '__all__'
 
 
+
 class AnimeDetailSerializer(s.ModelSerializer):
     videos = VideoListSerializer(many=True)
     class Meta:
@@ -78,5 +79,9 @@ class AnimeDetailSerializer(s.ModelSerializer):
                   'description', 
                   'videos')
 
+class VideoShotsListSerializer(s.ModelSerializer):
+    class Meta:
+        model = VideoShots                           
+        fields = '__all__'
 
 

@@ -2,6 +2,7 @@ from django.db import models
 from datetime import datetime
 from django.urls import reverse
 from django.core.validators import FileExtensionValidator
+from yaml import BaseLoader
 
 
 class Anime(models.Model):
@@ -28,7 +29,7 @@ class Anime(models.Model):
 
 class Genre(models.Model):
     title = models.CharField('Имя', max_length=100)
-    description = models.TextField('Описание')
+    description = models.TextField('Описание', null=True, blank=True)
     slug = models.SlugField(unique=True,
         help_text='Удобный URL-адрес для жанра.')
 
@@ -50,6 +51,8 @@ class Personage(models.Model):
     name = models.CharField('Имя', max_length=100)
     description = models.TextField('Описание')
     image = models.ImageField('Изображение', upload_to="actors/")
+    slug = models.SlugField(unique=True,
+        help_text='Удобный URL-адрес.')
 
     def __str__(self):
         return self.name
@@ -80,17 +83,18 @@ class Video(models.Model):
     description = models.TextField(null=True, blank=True)
     slug = models.SlugField(unique=True,
         help_text='Удобный URL-адрес для видеоклипа.')
-    image = models.ImageField(upload_to='image/')
+    image = models.ImageField(upload_to='image/', null=True, blank=True)
     file = models.FileField(
         upload_to='video/',
-        validators=[FileExtensionValidator(allowed_extensions=['mp4'])]
+        validators=[FileExtensionValidator(allowed_extensions=['mp4'])], null=True
     )
     video_type = models.IntegerField(
         choices=VIDEO_TYPE,
         default=WEBM,
-        help_text='Тип видео'
+        help_text='Тип видео',
+        null=True
     )
-    genres = models.ManyToManyField(Genre, verbose_name='Жанры')
+    genres = models.ManyToManyField(Genre, verbose_name='Жанры', null=True)
     category = models.ForeignKey(
         Anime, verbose_name='Аниме', on_delete=models.SET_NULL, null=True, related_name='videos'
     )
@@ -131,10 +135,10 @@ class Video(models.Model):
 
 class VideoShots(models.Model):
     title = models.CharField('Заголовок', max_length=100)
-    description = models.TextField('Описание')
+    description = models.TextField('Описание', null=True, blank=True)
     slug = models.SlugField(unique=True,
         help_text='Удобный URL-адрес для видеокадров.')
-    image = models.ImageField('Изображение', upload_to='video_shots/')
+    image = models.ImageField('Изображение', upload_to='video_shots/', null=True, blank=True)
     video = models.ForeignKey(Video, verbose_name='Видео', on_delete=models.CASCADE)
 
     def __str__(self):

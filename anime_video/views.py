@@ -4,14 +4,15 @@ from rest_framework.response import Response
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 from django_filters import rest_framework as filters
 
-from .models import Video, Anime, Personage, Genre
+from .models import Video, Anime, Personage, Genre, VideoShots
 from . serializers import (
     VideoListSerializer, 
     VideoDetailSerializer, 
     PersonageSerializer, 
     GenreSerializer, 
     AnimeSerializer, 
-    AnimeDetailSerializer
+    AnimeDetailSerializer,
+    VideoShotsListSerializer
     )
 
 from config.mixins import RequestLogViewMixin
@@ -59,3 +60,7 @@ class GenreDetail(RetrieveAPIView):
 class GenreList(ListAPIView):
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
+
+class VideoShotsList(ListAPIView):
+    queryset = VideoShots.objects.all()
+    serializer_class = VideoShotsListSerializer
