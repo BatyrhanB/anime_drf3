@@ -38,35 +38,35 @@ services:
 
   redis:
     image: redis:alpine
-  celery:
-    restart: always
-    build:
-      context: .
-    command: celery -A config worker -l info
-    volumes:
-      - .:/app
-    environment:
-    - DEBUG=True
-    - SECRET_KEY=dbaa1_i7%*3r9-=z-+_mz4r-!qeed@(-a_r(g@k8jo8y3r27%m
-    - DJANGO_ALLOWED_HOSTS=localhost 0.0.0.0 127.0.0.1 [::1]
-    depends_on:
-      - db
-      - redis
+  # celery:
+  #   restart: always
+  #   build:
+  #     context: .
+  #   command: celery -A config worker -l info
+  #   volumes:
+  #     - .:/app
+  #   environment:
+  #   - DEBUG=True
+  #   - SECRET_KEY=dbaa1_i7%*3r9-=z-+_mz4r-!qeed@(-a_r(g@k8jo8y3r27%m
+  #   - DJANGO_ALLOWED_HOSTS=localhost 0.0.0.0 127.0.0.1 [::1]
+  #   depends_on:
+  #     - db
+  #     - redis
 
-  celery-beat:
-    restart: always
-    build:
-      context: .
-    command: celery -A config beat -l info
-    volumes:
-      - .:/app
-    environment:
-      - DEBUG=True
-      - SECRET_KEY=dbaa1_i7%*3r9-=z-+_mz4r-!qeed@(-a_r(g@k8jo8y3r27%m
-      - DJANGO_ALLOWED_HOSTS=localhost 0.0.0.0 127.0.0.1 [::1]
-    depends_on:
-      - db
-      - redis
+  # celery-beat:
+  #   restart: always
+  #   build:
+  #     context: .
+  #   command: celery -A config beat -l info
+  #   volumes:
+  #     - .:/app
+  #   environment:
+  #     - DEBUG=True
+  #     - SECRET_KEY=dbaa1_i7%*3r9-=z-+_mz4r-!qeed@(-a_r(g@k8jo8y3r27%m
+  #     - DJANGO_ALLOWED_HOSTS=localhost 0.0.0.0 127.0.0.1 [::1]
+  #   depends_on:
+  #     - db
+  #     - redis
 
 volumes:
   postgres_data:

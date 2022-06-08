@@ -51,7 +51,7 @@ class Personage(models.Model):
         max_length=100)
     description = models.TextField('Описание')
     image = models.ImageField('Изображение',
-        upload_to="actors/")
+        upload_to="actors/", null=True, blank=True)
     slug = models.SlugField(unique=True,
         help_text='Удобный URL-адрес.')
 
