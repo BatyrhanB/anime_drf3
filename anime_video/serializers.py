@@ -44,12 +44,16 @@ class GenreInnerSerializer(s.ModelSerializer):
                   'title'
                   )
 
+class AnimeSerializer(s.ModelSerializer):
+    class Meta:
+        model = Anime                           
+        fields = '__all__'
+
 
 class VideoDetailSerializer(s.ModelSerializer):
 
-    category = s.CharField(source='category.title')
-    # genre = s.CharField(source='genres.title')
-    genres = GenreInnerSerializer(many=True)
+    category = AnimeSerializer()
+    genres = GenreSerializer(many=True)
     personages = PersonageInnerSerializer(many=True)
 
     class Meta:
@@ -69,13 +73,6 @@ class VideoDetailSerializer(s.ModelSerializer):
                   'modified_date', 
                   'publish_date'
                  )
-
-
-class AnimeSerializer(s.ModelSerializer):
-    class Meta:
-        model = Anime                           
-        fields = '__all__'
-
 
 
 class AnimeDetailSerializer(s.ModelSerializer):
