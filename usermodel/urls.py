@@ -1,6 +1,7 @@
 from django.urls import path
 from usermodel import views
 from rest_framework.routers import DefaultRouter
+from django.views.decorators.cache import cache_page
 
 
 urlpatterns = [

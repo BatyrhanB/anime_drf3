@@ -40,16 +40,25 @@ class TimerMiddlewere(MiddlewareMixin):
         return response
         
         
-def set_last_active_middleware(get_response):
+# def set_last_active_middleware(get_response):
 
-    # @cache_page(60*5)
+#     # @cache_page(60*5)
+#     def middleware(request):
+#         response = get_response(request)
+#         if request.user:
+#             last_active = cache.get('last_active')
+#             if not last_active:
+#                 User.objects.filter(id=request.user.id).update(last_active=timezone.now())
+#                 cache.set('last_active', last_active, 30)
+#         return response
+#     return middleware
+
+
+def set_last_active_middleware(get_response):
+    @cache_page(30)
     def middleware(request):
         response = get_response(request)
         if request.user:
-            last_active = cache.get('last_active')
-            if not last_active:
-                User.objects.filter(id=request.user.id).update(last_active=timezone.now())
-                cache.set('last_active', last_active, 60)
+            User.objects.filter(pk=request.user.pk).update(last_active=timezone.now())
         return response
     return middleware
-

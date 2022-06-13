@@ -23,6 +23,7 @@ from . serializers import (
                           )
 
 from config.mixins import RequestLogViewMixin
+from .paginations import CustomPagination
 
 
 class VideoList(RequestLogViewMixin,
@@ -30,6 +31,7 @@ class VideoList(RequestLogViewMixin,
                 ):
     queryset = Video.objects.all()
     serializer_class = VideoListSerializer
+    pagination_class = CustomPagination
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_fields = ('category', 'genres', 'personages')
     # pagination_class = None
