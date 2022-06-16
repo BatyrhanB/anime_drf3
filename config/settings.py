@@ -124,7 +124,7 @@ CACHE_PORT=config('CACHE_PORT')
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': f'{CACHE_HOST}:{CACHE_PORT}',
+        'LOCATION': f'cache:{CACHE_PORT}',
     }
 }
 

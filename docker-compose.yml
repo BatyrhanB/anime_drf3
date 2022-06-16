@@ -23,6 +23,7 @@ services:
       - "8000:8000"
     depends_on:
       - db
+      - cache
 
   nginx:
     image: nginx:latest
@@ -38,6 +39,14 @@ services:
 
   redis:
     image: redis:alpine
+
+  cache:
+   image: memcached
+   ports:
+     - "11211:11211"
+   entrypoint:
+    - memcached
+    - -m 64
   # celery:
   #   restart: always
   #   build:
